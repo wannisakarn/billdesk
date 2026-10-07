@@ -1,0 +1,65 @@
+{
+  "name": "billdesk",
+  "productName": "BillDesk",
+  "version": "1.0.0",
+  "description": "โปรแกรมออกใบเสนอราคา ใบส่งของ ใบเสร็จรับเงิน แบบออฟไลน์ 100%",
+  "main": "main.js",
+  "author": "BillDesk",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis portable",
+    "dist:win": "electron-builder --win nsis",
+    "dist:portable": "electron-builder --win portable",
+    "dist:mac": "electron-builder --mac dmg",
+    "dist:linux": "electron-builder --linux AppImage"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.billdesk.offline",
+    "productName": "BillDesk",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "build/icon.png",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "runAfterFinish": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "BillDesk",
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "BillDesk-Setup.exe"
+    },
+    "portable": {
+      "artifactName": "BillDesk-Portable-${version}.exe"
+    },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.business"
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Office"
+    },
+    "publish": null
+  }
+}

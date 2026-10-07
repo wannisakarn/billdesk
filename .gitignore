@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+Thumbs.db
+*.exe
+*.blockmap
+# ไฟล์สำรองข้อมูลจริงของผู้ใช้ — ห้าม commit
+BillDesk-backup-*.json
+billdesk-auto-*.json
