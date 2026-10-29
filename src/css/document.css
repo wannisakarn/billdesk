@@ -1,0 +1,117 @@
+/* ============================================================
+ *  document.css — หน้าตาเอกสาร A4 (ใช้ทั้งบนจอและตอนพิมพ์)
+ *  หน่วยเป็น mm/pt เพื่อให้ขนาดบนจอ = ขนาดบนกระดาษจริง
+ * ============================================================ */
+.sheet {
+  --accent: #1f2a44;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 10mm 12mm;
+  background: #fff;
+  color: #111;
+  font-family: 'Sarabun', 'Leelawadee UI', Tahoma, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.35;
+  display: flex;
+  flex-direction: column;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.sheet * { box-sizing: border-box; }
+
+/* ---------- Header ---------- */
+.d-head { display: flex; justify-content: space-between; gap: 6mm; }
+.d-seller { flex: 1; display: flex; gap: 4mm; }
+.d-logo { width: 22mm; height: 22mm; flex: 0 0 22mm; display: flex; align-items: flex-start; }
+.d-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.d-seller-name { font-size: 13pt; font-weight: 700; margin-bottom: 1mm; }
+.d-seller .muted, .sheet .muted { color: #444; }
+.d-title-box { width: 60mm; flex: 0 0 60mm; text-align: right; }
+.d-title { font-size: 19pt; font-weight: 700; color: var(--accent); line-height: 1.4; }
+.d-title-en { font-size: 9.5pt; letter-spacing: .12em; color: #555; }
+.d-copy { display: inline-block; margin-top: 1.5mm; border: 1px solid var(--accent); color: var(--accent); padding: .3mm 3mm; border-radius: 1mm; font-size: 9.5pt; font-weight: 600; }
+
+.d-meta { width: 100%; border-collapse: collapse; margin-top: 3mm; font-size: 10pt; }
+.d-meta td { padding: .6mm 0; text-align: left; vertical-align: top; }
+.d-meta td:first-child { color: #555; width: 22mm; }
+.d-meta td:last-child { font-weight: 600; }
+
+/* ---------- Customer ---------- */
+.d-cust { display: flex; gap: 6mm; margin-top: 5mm; border: 1px solid #cfd3da; border-radius: 1.5mm; padding: 3mm 4mm; }
+.d-cust .c-main { flex: 1; }
+.d-cust .c-side { width: 62mm; flex: 0 0 62mm; border-left: 1px solid #e3e6eb; padding-left: 4mm; }
+.d-label { font-size: 9pt; color: #666; }
+.d-cust-name { font-weight: 700; font-size: 11pt; }
+
+/* ---------- Items ---------- */
+.d-items { width: 100%; border-collapse: collapse; margin-top: 4mm; font-size: 10pt; }
+.d-items thead { display: table-header-group; }       /* หัวตารางซ้ำทุกหน้าเมื่อรายการยาว */
+.d-items th { background: var(--accent); color: #fff; font-weight: 600; padding: 1.8mm 2mm; text-align: left; }
+.d-items td { padding: 1.6mm 2mm; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+.d-items tr { break-inside: avoid; page-break-inside: avoid; }
+.d-items .n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.d-items .c { text-align: center; }
+.d-items .no { width: 9mm; } .d-items .qty { width: 16mm; } .d-items .unit { width: 14mm; }
+.d-items .price { width: 24mm; } .d-items .disc { width: 18mm; } .d-items .amt { width: 26mm; }
+.d-items .code { width: 20mm; }
+.d-items .desc-sub { color: #555; font-size: 9pt; white-space: pre-line; }
+.d-items tr.filler td { border-bottom: 1px solid #f1f2f4; height: 7mm; }
+
+/* ---------- Summary ---------- */
+.d-sum { display: flex; gap: 6mm; margin-top: 3mm; break-inside: avoid; page-break-inside: avoid; }
+.d-sum .s-left { flex: 1; }
+.d-sum .s-right { width: 74mm; flex: 0 0 74mm; }
+.d-baht { background: #f3f4f6; padding: 2mm 3mm; border-radius: 1mm; font-weight: 600; text-align: center; }
+.d-notes { margin-top: 3mm; font-size: 9.5pt; white-space: pre-line; }
+.d-tot { width: 100%; border-collapse: collapse; font-size: 10pt; }
+.d-tot td { padding: 1mm 2mm; }
+.d-tot td:last-child { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.d-tot tr.grand td { background: var(--accent); color: #fff; font-weight: 700; font-size: 11pt; padding: 1.8mm 2mm; }
+.d-tot tr.net td { font-weight: 700; border-bottom: 1.5px double #333; }
+
+/* ---------- Payment (receipt) ---------- */
+.d-pay { margin-top: 4mm; border: 1px solid #cfd3da; border-radius: 1.5mm; padding: 2.5mm 4mm; font-size: 9.5pt; break-inside: avoid; page-break-inside: avoid; }
+.d-pay .opts { display: flex; gap: 6mm; flex-wrap: wrap; margin-bottom: 1.5mm; }
+.d-pay .box { display: inline-block; width: 3.4mm; height: 3.4mm; border: 1px solid #333; margin-right: 1.5mm; vertical-align: -0.5mm; text-align: center; line-height: 3mm; font-size: 9pt; }
+.d-pay .line { display: flex; gap: 6mm; flex-wrap: wrap; }
+.d-pay .fill { display: inline-block; min-width: 28mm; border-bottom: 1px dotted #777; padding: 0 1mm; }
+
+/* ---------- Signatures (ชิดล่างของหน้า) ---------- */
+.d-spacer { flex: 1 1 auto; min-height: 4mm; }
+.d-sign { display: flex; justify-content: space-between; gap: 10mm; margin-top: 6mm; break-inside: avoid; page-break-inside: avoid; }
+.d-sign .sg { flex: 1; text-align: center; font-size: 9.5pt; }
+.d-sign .sg .for { color: #555; margin-bottom: 14mm; }
+.d-sign .sg .ln { display: flex; gap: 4mm; }
+.d-sign .sg .ln > div { flex: 1; border-top: 1px dotted #555; padding-top: 1mm; }
+.d-sign .sg .ln > div.date { flex: 0 0 26mm; }
+.d-foot { margin-top: 3mm; font-size: 8.5pt; color: #777; text-align: center; }
+
+/* ---------- หน้าแนบ: วิธีการชำระเงิน ---------- */
+.p-sum { display: flex; justify-content: space-between; gap: 6mm; margin-top: 6mm; border: 1px solid #cfd3da; border-radius: 1.5mm; padding: 3mm 4mm; }
+.p-sum .p-amt { text-align: right; }
+.p-sum .p-amt b { font-size: 15pt; color: var(--accent); }
+.p-head { margin-top: 7mm; padding: 2mm 4mm; background: var(--accent); color: #fff; font-weight: 700; border-radius: 1.5mm 1.5mm 0 0; }
+.p-accs { display: flex; flex-direction: column; gap: 3mm; margin-top: 3mm; }
+.p-acc { display: flex; gap: 4mm; align-items: flex-start; border: 1px solid #cfd3da; border-radius: 1.5mm; padding: 3mm 4mm; break-inside: avoid; page-break-inside: avoid; }
+.p-acc .p-no { flex: 0 0 8mm; height: 8mm; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.p-acc table { border-collapse: collapse; font-size: 11pt; }
+.p-acc td { padding: .6mm 0; vertical-align: top; }
+.p-acc td:first-child { color: #555; width: 28mm; }
+.p-acc .p-accno { font-size: 14pt; font-weight: 700; letter-spacing: .04em; }
+.p-note { margin-top: 6mm; }
+.p-contact { margin-top: 3mm; font-size: 10pt; color: #333; }
+
+/* ---------- หน้าแนบ: สำเนาบัตรประชาชน ---------- */
+.id-card-box { margin: 10mm auto 0; text-align: center; }
+.id-card { position: relative; display: inline-block; width: 110mm; max-width: 100%; border: 1px solid #cfd3da; border-radius: 2mm; overflow: hidden; }
+.id-card img { display: block; width: 100%; height: auto; }
+.id-wm { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.id-wm span { transform: rotate(-18deg); color: rgba(200, 30, 30, .55); font-weight: 700; font-size: 12.5pt; text-align: center; line-height: 1.5; padding: 0 6mm; border-top: 1px solid rgba(200,30,30,.45); border-bottom: 1px solid rgba(200,30,30,.45); }
+.id-certify { margin-top: 3mm; font-weight: 700; font-size: 12pt; }
+.id-confirm { margin: 10mm auto 0; max-width: 160mm; text-align: center; font-size: 12.5pt; line-height: 1.7; }
+.id-sign { margin: 10mm auto 0; width: 85mm; text-align: center; font-size: 11pt; break-inside: avoid; page-break-inside: avoid; }
+.id-sign-img { height: 18mm; display: flex; align-items: flex-end; justify-content: center; }
+.id-sign-img img { max-height: 18mm; max-width: 60mm; object-fit: contain; }
+.id-sign-line { margin-top: -2mm; }
+.id-sign-name { margin-top: 1.5mm; font-weight: 600; }
+.id-sign-role, .id-sign-date { color: #444; margin-top: .8mm; }
