@@ -7,5 +7,6 @@ contextBridge.exposeInMainWorld('desktop', {
   print: () => ipcRenderer.invoke('print'),
   autoBackup: (json) => ipcRenderer.invoke('backup:auto', json),
   openBackupFolder: () => ipcRenderer.invoke('backup:openFolder'),
-  info: () => ipcRenderer.invoke('app:info')
+  info: () => ipcRenderer.invoke('app:info'),
+  openLabelApp: (dir, json) => ipcRenderer.invoke('label:open', dir, json)
 });

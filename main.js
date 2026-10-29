@@ -156,6 +156,36 @@ ipcMain.handle('backup:openFolder', async () => {
   return { ok: true };
 });
 
+// ส่งข้อมูลใบส่งของไปโปรแกรมใบปะหน้า (Shipping Label App)
+// เปิด index.html ด้วย Microsoft Edge แบบหน้าต่างแอป (เหมือนไอคอนบน Desktop) พร้อมแนบข้อมูลใน #billdesk=...
+// และคัดลอกข้อมูลไว้ในคลิปบอร์ดเผื่อวางเองด้วย Ctrl+V
+ipcMain.handle('label:open', async (event, dir, json) => {
+  const { clipboard } = require('electron');
+  const { pathToFileURL } = require('url');
+  const { spawn } = require('child_process');
+  try { clipboard.writeText(String(json || '')); } catch (_) { /* ignore */ }
+  const html = path.join(String(dir || ''), 'index.html');
+  if (!dir || !fs.existsSync(html)) return { ok: false, error: 'ไม่พบโปรแกรมใบปะหน้าที่ ' + html + ' (ตั้งค่าโฟลเดอร์ได้ที่หน้าข้อมูลบริษัท & ตั้งค่า)' };
+  const b64 = Buffer.from(String(json || ''), 'utf8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const url = pathToFileURL(html).href + '#billdesk=' + b64;
+  const edge = [
+    path.join(process.env['ProgramFiles(x86)'] || 'C:\\Program Files (x86)', 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+    path.join(process.env['ProgramFiles'] || 'C:\\Program Files', 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+    path.join(process.env['LOCALAPPDATA'] || '', 'Microsoft', 'Edge', 'Application', 'msedge.exe')
+  ].find(p => { try { return fs.existsSync(p); } catch (_) { return false; } });
+  try {
+    if (edge) {
+      const child = spawn(edge, ['--app=' + url], { detached: true, stdio: 'ignore' });
+      child.unref();
+    } else {
+      await shell.openExternal(url);
+    }
+    return { ok: true, url };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+});
+
 ipcMain.handle('app:info', async () => ({
   version: app.getVersion(),
   dataPath: app.getPath('userData'),
